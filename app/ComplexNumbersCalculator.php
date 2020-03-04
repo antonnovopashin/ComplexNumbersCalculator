@@ -20,22 +20,27 @@ class ComplexNumbersCalculator
     }
 
     public function subtract(ComplexNumber $a, ComplexNumber $b): ComplexNumber {
-        $resultRealPart = $a->getRealPart() + $b->getRealPart();
-        $resultImaginaryPart = $a->getImaginaryPart() + $b->getImaginaryPart();
+        $resultRealPart = $a->getRealPart() - $b->getRealPart();
+        $resultImaginaryPart = $a->getImaginaryPart() - $b->getImaginaryPart();
 
         return new ComplexNumber($resultRealPart, $resultImaginaryPart);
     }
 
-    public function division(ComplexNumber $a, ComplexNumber $b): ComplexNumber {
-        $resultRealPart = $a->getRealPart() + $b->getRealPart();
-        $resultImaginaryPart = $a->getImaginaryPart() + $b->getImaginaryPart();
+    public function divide(ComplexNumber $a, ComplexNumber $b): ComplexNumber {
+        $resultRealPart = $a->getRealPart() / $b->getRealPart();
+        $resultImaginaryPart = $a->getImaginaryPart() / $b->getImaginaryPart();
 
         return new ComplexNumber($resultRealPart, $resultImaginaryPart);
     }
 
     public function multiply(ComplexNumber $a, ComplexNumber $b): ComplexNumber {
-        $resultRealPart = $a->getRealPart() + $b->getRealPart();
-        $resultImaginaryPart = $a->getImaginaryPart() + $b->getImaginaryPart();
+        $firstPart = $a->getRealPart() * $b->getRealPart();
+        $secondPart = $a->getRealPart() * $b->getImaginaryPart();
+        $thirdPart = $a->getImaginaryPart() * $b->getRealPart();
+        $fourthPart = -($a->getImaginaryPart() * $b->getImaginaryPart());
+
+        $resultImaginaryPart = $secondPart + $thirdPart;
+        $resultRealPart = $firstPart + $fourthPart;
 
         return new ComplexNumber($resultRealPart, $resultImaginaryPart);
     }
