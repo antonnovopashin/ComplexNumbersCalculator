@@ -27,8 +27,27 @@ class ComplexNumbersCalculator
     }
 
     public function divide(ComplexNumber $a, ComplexNumber $b): ComplexNumber {
-        $resultRealPart = $a->getRealPart() / $b->getRealPart();
-        $resultImaginaryPart = $a->getImaginaryPart() / $b->getImaginaryPart();
+        if ($b->getRealPart() == 0 && $b->getImaginaryPart() == 0) {
+            throw new \Exception('can\'t divide by 0');
+        }
+
+        $multiplyerRealPart = $b->getRealPart();
+        $multiplyerImaginaryPart = -$b->getImaginaryPart();
+
+        $firstPart = $a->getRealPart() * $multiplyerRealPart;
+        $secondPart = $a->getRealPart() * $multiplyerImaginaryPart;
+        $thirdPart = $a->getImaginaryPart() * $multiplyerRealPart;
+        $fourthPart = -($a->getImaginaryPart() * $multiplyerImaginaryPart);
+
+        $upperRealPart = $firstPart + $fourthPart;
+        $upperImaginaryPart = $secondPart + $thirdPart;
+
+        $bottomRealPartFirst = $multiplyerRealPart * $multiplyerRealPart;
+        $bottomRealPartSecond = $multiplyerImaginaryPart * $multiplyerImaginaryPart * (-1);
+        $bottomPart = $bottomRealPartFirst - $bottomRealPartSecond;
+
+        $resultRealPart = $upperRealPart / $bottomPart;
+        $resultImaginaryPart = $upperImaginaryPart / $bottomPart;
 
         return new ComplexNumber($resultRealPart, $resultImaginaryPart);
     }
